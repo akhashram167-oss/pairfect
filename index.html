@@ -1,0 +1,672 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Pairfect - One pair. Every outfit.</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f5f5;
+    --blue: #1E4FD8;
+    --yellow: #F5C518;
+    --red: #D42B2B;
+    --green: #1DB954;
+    --orange: #FF6B35;
+    --purple: #7C3AED;
+    --pink: #E91E8C;
+    --grey: #8a8f98;
+    --mid: #1a1a1a;
+    --subtle: #2a2a2a;
+    --active-color: var(--blue);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 0 6vw;
+    position: relative;
+    gap: 4vw;
+  }
+
+  /* Diagonal color band behind the shoe */
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,
+      transparent 0%, transparent 35%,
+      var(--active-color) 35%, var(--active-color) 44%,
+      var(--yellow) 44%, var(--yellow) 52%,
+      var(--red) 52%, var(--red) 60%,
+      transparent 60%
+    );
+    opacity: 0.08;
+    pointer-events: none;
+    transition: background 0.4s ease;
+  }
+
+  .hero-text {
+    z-index: 1;
+    padding: 6vh 0;
+  }
+
+  .eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 1.2rem;
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.2rem, 7vw, 7rem);
+    line-height: 0.92;
+    letter-spacing: 0.01em;
+    color: var(--white);
+  }
+
+  h1 .strike {
+    position: relative;
+    display: inline-block;
+    color: #888;
+  }
+
+  h1 .strike::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 52%;
+    width: 100%;
+    height: 4px;
+    background: var(--red);
+    transform: rotate(-3deg);
+  }
+
+  h1 .highlight {
+    color: var(--yellow);
+  }
+
+  .hero-sub {
+    margin-top: 1.6rem;
+    font-size: 1rem;
+    color: #aaa;
+    line-height: 1.6;
+    max-width: 380px;
+  }
+
+  /* CTA */
+  .cta-block {
+    margin-top: 2.8rem;
+  }
+
+  .cta-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 0.7rem;
+  }
+
+  .cta-form {
+    display: flex;
+    gap: 0;
+    max-width: 420px;
+    width: 100%;
+  }
+
+  .cta-input {
+    flex: 1;
+    min-width: 0;
+    background: var(--subtle);
+    border: 1px solid #333;
+    border-right: none;
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    padding: 0.9rem 1.1rem;
+    border-radius: 4px 0 0 4px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .cta-input::placeholder { color: #555; }
+  .cta-input:focus { border-color: var(--yellow); }
+
+  .cta-btn {
+    background: var(--yellow);
+    color: var(--black);
+    border: none;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    padding: 0.9rem 1.5rem;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    white-space: nowrap;
+  }
+
+  .cta-btn:hover { background: #e8b800; }
+  .cta-btn:active { transform: scale(0.98); }
+
+  .no-spam {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 0.8rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--yellow);
+    letter-spacing: 0.03em;
+    background: rgba(245, 197, 24, 0.1);
+    border: 1px solid rgba(245, 197, 24, 0.28);
+    border-radius: 999px;
+    padding: 0.42rem 0.72rem;
+  }
+
+  /* SHOE IMAGE */
+  .hero-image {
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .mobile-shoe-image {
+    display: none;
+  }
+
+  .shoe-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 620px;
+    border-radius: 0;
+    overflow: visible;
+    aspect-ratio: 4 / 3;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0 36px 48px rgba(0,0,0,0.6));
+    transition: filter 0.4s ease;
+  }
+
+  .shoe-wrap picture,
+  .shoe-wrap img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .shoe-wrap picture {
+    display: block;
+  }
+
+  .shoe-wrap img {
+    object-fit: contain;
+    object-position: center;
+    display: block;
+    animation: float 6s ease-in-out infinite;
+    transition: opacity 0.18s ease, transform 0.35s ease;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-14px); }
+  }
+
+  /* Color dot indicators */
+  .color-dots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 1rem;
+  }
+
+  .dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  .dot:hover { transform: scale(1.3); }
+  .dot.active { border-color: var(--white); transform: scale(1.2); }
+  .dot-blue { background: var(--blue); }
+  .dot-yellow { background: var(--yellow); }
+  .dot-red { background: var(--red); }
+  .dot-black { background: #333; }
+  .dot-green { background: var(--green); }
+  .dot-orange { background: var(--orange); }
+  .dot-purple { background: var(--purple); }
+  .dot-pink { background: var(--pink); }
+  .dot-grey { background: var(--grey); }
+  .dot-white {
+    background: #f7f7f0;
+    border-color: #5b5b5b;
+  }
+
+  /* BOTTOM STRIP */
+  .strip {
+    display: flex;
+    height: 6px;
+  }
+
+  .strip-b { flex: 1; background: var(--blue); }
+  .strip-y { flex: 1; background: var(--yellow); }
+  .strip-r { flex: 1; background: var(--red); }
+  .strip-g { flex: 1; background: var(--green); }
+  .strip-o { flex: 1; background: var(--orange); }
+  .strip-p { flex: 1; background: var(--purple); }
+  .strip-pk { flex: 1; background: var(--pink); }
+  .strip-gr { flex: 1; background: var(--grey); }
+  .strip-w { flex: 1; background: #f7f7f0; }
+
+  .dot-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 0.9rem;
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: var(--yellow);
+    line-height: 1.45;
+    max-width: 340px;
+    background: rgba(245, 197, 24, 0.11);
+    border: 1px solid rgba(245, 197, 24, 0.35);
+    border-radius: 999px;
+    padding: 0.5rem 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .dot-hint::before {
+    content: '↑';
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.35rem;
+    height: 1.35rem;
+    flex: 0 0 auto;
+    color: var(--black);
+    background: var(--yellow);
+    border-radius: 50%;
+    font-size: 1rem;
+    font-weight: 900;
+    animation: pointPulse 1.2s ease-in-out infinite;
+  }
+
+  .form-message {
+    min-height: 1.1rem;
+    margin-top: 0.7rem;
+    font-size: 0.78rem;
+    color: #888;
+  }
+
+  .form-message.error { color: var(--red); }
+  .form-message.success { color: var(--yellow); }
+
+  @keyframes pointPulse {
+    0%, 100% { transform: translateY(2px); }
+    50% { transform: translateY(-3px); }
+  }
+
+  /* THANK YOU STATE */
+  .thankyou {
+    display: none;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--yellow);
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-top: 0.4rem;
+  }
+
+  .thankyou.visible { display: flex; }
+
+  /* RESPONSIVE */
+  @media (max-width: 980px) {
+    .hero {
+      grid-template-columns: minmax(0, 1fr);
+      align-items: start;
+      min-height: auto;
+      padding: max(2rem, env(safe-area-inset-top)) 7vw 2.75rem;
+      gap: 1.45rem;
+    }
+
+    .hero-text {
+      width: 100%;
+      padding: 0;
+    }
+
+    .hero-image {
+      display: none;
+      width: 100%;
+      min-height: 0;
+      margin-top: 0.3rem;
+    }
+
+    .mobile-shoe-image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      margin: 1.15rem 0 0.45rem;
+    }
+
+    .shoe-wrap {
+      width: min(92vw, 520px);
+      max-width: 100%;
+      aspect-ratio: 16 / 11;
+      filter: drop-shadow(0 24px 34px rgba(0,0,0,0.55));
+    }
+
+    .eyebrow {
+      margin-bottom: 0.85rem;
+    }
+
+    h1 {
+      font-size: clamp(3rem, 15vw, 5.4rem);
+      line-height: 0.9;
+    }
+
+    h1 .strike::after {
+      height: 3px;
+    }
+
+    .hero-sub {
+      max-width: 100%;
+      margin-top: 1.15rem;
+      font-size: clamp(0.95rem, 3.8vw, 1.05rem);
+      line-height: 1.55;
+    }
+
+    .cta-block {
+      margin-top: 1.8rem;
+    }
+
+    .cta-form {
+      max-width: none;
+    }
+
+    .color-dots {
+      margin-top: 1.5rem !important;
+      gap: 10px;
+    }
+
+    .dot {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      padding-left: 5.5vw;
+      padding-right: 5.5vw;
+      padding-bottom: max(2rem, env(safe-area-inset-bottom));
+      gap: 1.2rem;
+    }
+
+    .shoe-wrap {
+      width: min(88vw, 420px);
+      aspect-ratio: 4 / 3;
+    }
+
+    .cta-form {
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .cta-input {
+      width: 100%;
+      border-right: 1px solid #333;
+      border-radius: 4px;
+      font-size: 1rem;
+      padding: 0.95rem 1rem;
+    }
+
+    .cta-btn {
+      width: 100%;
+      min-height: 48px;
+      border-radius: 4px;
+      padding: 0.9rem 1rem;
+      font-size: 1.1rem;
+    }
+
+    .thankyou {
+      align-items: flex-start;
+      line-height: 1.4;
+    }
+  }
+
+  @media (max-width: 390px) {
+    .hero {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    .shoe-wrap {
+      width: min(90vw, 350px);
+      aspect-ratio: 1 / 0.78;
+    }
+
+    h1 {
+      font-size: clamp(2.65rem, 15vw, 3.35rem);
+    }
+
+    .eyebrow {
+      font-size: 0.64rem;
+    }
+
+    .hero-sub {
+      font-size: 0.92rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-text">
+    <p class="eyebrow">Introducing Pairfect</p>
+    <h1>
+      One pair<br>
+      for all<br>
+      outfits?<br>
+      <span class="highlight">Not anymore.</span>
+    </h1>
+    <p class="hero-sub">
+      With interchangeable technology, you can attach and detach the skin of the shoe whenever you want - one pair unlocks more combinations of colours for every outfit.
+    </p>
+
+    <div class="mobile-shoe-image">
+      <div class="shoe-wrap">
+        <picture>
+          <source srcset="shoe imaga webg/blue shoe.webp" type="image/webp">
+          <img class="shoe-image" src="all shoes png/blue shoe.png" alt="Pairfect pair of shoes with interchangeable colour skins">
+        </picture>
+      </div>
+    </div>
+
+    <div class="cta-block">
+      <p class="cta-label">Write your email if you're interested</p>
+      <div id="form-area">
+        <form class="cta-form" id="signup-form">
+          <input
+            class="cta-input"
+            type="email"
+            placeholder="your@email.com"
+            id="email-input"
+            name="email"
+            autocomplete="email"
+            required
+          >
+          <button class="cta-btn" type="submit">I'm in</button>
+        </form>
+        <p class="no-spam">We don't spam. Motherpromise.</p>
+        <p class="form-message" id="form-message" aria-live="polite"></p>
+      </div>
+      <div class="thankyou" id="thankyou">
+        You're in the list. Soon Pairfect will be on your feet.
+      </div>
+    </div>
+
+    <div class="color-dots" style="margin-top:2rem;">
+      <span class="dot dot-blue active" data-color="blue"></span>
+      <span class="dot dot-yellow" data-color="yellow"></span>
+      <span class="dot dot-red" data-color="red"></span>
+      <span class="dot dot-black" data-color="black"></span>
+      <span class="dot dot-green" data-color="green"></span>
+      <span class="dot dot-orange" data-color="orange"></span>
+      <span class="dot dot-purple" data-color="purple"></span>
+      <span class="dot dot-pink" data-color="pink"></span>
+      <span class="dot dot-grey" data-color="grey"></span>
+      <span class="dot dot-white" data-color="white"></span>
+    </div>
+    <p class="dot-hint">Select a dot to see the spot colour on the shoe.</p>
+  </div>
+
+  <div class="hero-image">
+    <div class="shoe-wrap">
+      <picture>
+        <source srcset="shoe imaga webg/blue shoe.webp" type="image/webp">
+        <img class="shoe-image" src="all shoes png/blue shoe.png" alt="Pairfect pair of shoes with interchangeable colour skins">
+      </picture>
+    </div>
+  </div>
+</section>
+
+<div class="strip">
+  <div class="strip-b"></div>
+  <div class="strip-y"></div>
+  <div class="strip-r"></div>
+  <div class="strip-g"></div>
+  <div class="strip-o"></div>
+  <div class="strip-p"></div>
+  <div class="strip-pk"></div>
+  <div class="strip-gr"></div>
+  <div class="strip-w"></div>
+</div>
+
+<script>
+async function handleSubmit(event) {
+  if (event) event.preventDefault();
+  const input = document.getElementById('email-input');
+  const message = document.getElementById('form-message');
+  const val = input.value.trim();
+  message.textContent = '';
+  message.className = 'form-message';
+
+  if (!val || !val.includes('@')) {
+    input.style.borderColor = '#D42B2B';
+    message.textContent = 'Please enter a valid email address.';
+    message.classList.add('error');
+    input.focus();
+    setTimeout(() => input.style.borderColor = '', 1200);
+    return;
+  }
+
+  try {
+    const response = await fetch('/.netlify/functions/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: val })
+    });
+
+    let result = {};
+    try {
+      result = await response.json();
+    } catch (error) {}
+
+    if (!response.ok) {
+      throw new Error(result.error || 'Email could not be saved');
+    }
+
+    document.getElementById('form-area').style.display = 'none';
+    document.getElementById('thankyou').classList.add('visible');
+  } catch (error) {
+    input.style.borderColor = '#D42B2B';
+    message.textContent = error.message || 'Sorry, we could not save your email right now. Please try again.';
+    message.classList.add('error');
+    input.focus();
+  }
+}
+
+document.getElementById('signup-form').addEventListener('submit', handleSubmit);
+
+// Dot interaction
+const colorMap = {
+  blue: '#1E4FD8',
+  yellow: '#F5C518',
+  red: '#D42B2B',
+  black: '#333333',
+  green: '#1DB954',
+  orange: '#FF6B35',
+  purple: '#7C3AED',
+  pink: '#E91E8C',
+  grey: '#8a8f98',
+  white: '#f7f7f0'
+};
+
+const shoeImageMap = {
+  blue: { webp: 'shoe imaga webg/blue shoe.webp', png: 'all shoes png/blue shoe.png' },
+  yellow: { webp: 'shoe imaga webg/yellow.webp', png: 'all shoes png/yellow.png' },
+  red: { webp: 'shoe imaga webg/red.webp', png: 'all shoes png/red.png' },
+  black: { webp: 'shoe imaga webg/black.webp', png: 'all shoes png/black.png' },
+  green: { webp: 'shoe imaga webg/green.webp', png: 'all shoes png/green.png' },
+  orange: { webp: 'shoe imaga webg/orange.webp', png: 'all shoes png/orange.png' },
+  purple: { webp: 'shoe imaga webg/purple.webp', png: 'all shoes png/purple.png' },
+  pink: { webp: 'shoe imaga webg/pink.webp', png: 'all shoes png/pink.png' },
+  grey: { webp: 'shoe imaga webg/grey.webp', png: 'all shoes png/grey.png' },
+  white: { webp: 'shoe imaga webg/white.webp', png: 'all shoes png/white.png' }
+};
+
+document.querySelectorAll('.dot').forEach(dot => {
+  dot.addEventListener('click', function() {
+    document.querySelectorAll('.dot').forEach(d => d.classList.remove('active'));
+    this.classList.add('active');
+    const color = this.dataset.color;
+    if (color && colorMap[color]) {
+      document.documentElement.style.setProperty('--active-color', colorMap[color]);
+      const asset = shoeImageMap[color];
+      if (asset) {
+        document.querySelectorAll('.shoe-wrap picture').forEach(picture => {
+          const source = picture.querySelector('source');
+          const img = picture.querySelector('img');
+          if (source) source.srcset = asset.webp;
+          if (img) img.src = asset.png;
+        });
+      }
+    }
+  });
+});
+</script>
+
+</body>
+</html>
+
